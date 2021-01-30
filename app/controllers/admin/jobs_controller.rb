@@ -1,6 +1,6 @@
 class Admin::JobsController < ApplicationController
   before_action :require_is_admin
-  before_action :find_job, only: [:show, :edit, :update, :destroy]
+  before_action :find_job, only: [:show, :edit, :update, :destroy, :publish, :hide]
   def index
     @jobs = Job.all
   end
@@ -41,6 +41,16 @@ class Admin::JobsController < ApplicationController
     redirect_to admin_jobs_path
   end
 
+  def publish
+    @job.publish!
+    redirect_to admin_jobs_path,notice: 'Publish Success'  
+  end
+
+  def hide
+    @job.hide!
+    redirect_to admin_jobs_path,notice: 'Hide Success'  
+  end
+
   private
   
   def find_job
@@ -48,6 +58,6 @@ class Admin::JobsController < ApplicationController
   end
 
   def job_params
-    params.require(:job).permit(:title,:description,:wage_lower_bound, :wage_upper_bound, :contact_email)
+    params.require(:job).permit(:title,:description,:wage_lower_bound, :wage_upper_bound, :contact_email,:is_hidden)
   end
 end

@@ -1,14 +1,20 @@
 <tr>
   <td>#</td>
-  <td><%= link_to(job.title, admin_job_path(job)) %></td>
+  <td>
+    <%= render_job_status(job) %>
+    <%= link_to(job.title, admin_job_path(job)) %>
+  </td>
   <td><%= job.wage_lower_bound %></td>
   <td><%= job.wage_upper_bound %></td>
-  
+  <td><%= job.created_at %></td>
   <td>
-    <% if current_user %>
-      <%= link_to("Edit", edit_admin_job_path(job), class: "btn btn-sm btn-default")%>
-      <%= link_to("Delete", admin_job_path(job),    class: "btn btn-sm btn-default",
-                  method: :delete, data: { confirm: "Are you sure?" } )%>
+    <%= link_to("Edit", edit_admin_job_path(job), class: "btn btn-sm btn-default")%>
+    <%= link_to("Delete", admin_job_path(job),    class: "btn btn-sm btn-default",
+                method: :delete, data: { confirm: "Are you sure?" } )%>
+    <% if job.is_hidden %>
+      <%= link_to("Publish", publish_admin_job_path(job) , :method => :post, :class => "btn btn-xs btn-default") %>
+    <% else %>
+      <%= link_to("Hide", hide_admin_job_path(job), :method => :post,  :class => "btn btn-xs btn-default") %>
     <% end %>
   </td>
 
