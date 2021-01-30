@@ -1,6 +1,7 @@
 class Admin::JobsController < ApplicationController
   before_action :require_is_admin
   before_action :find_job, only: [:show, :edit, :update, :destroy, :publish, :hide]
+  layout "admin"
   def index
     @jobs = Job.all
   end
